@@ -23,9 +23,10 @@ fetch("http://localhost:5678/api/categories")
     const divFilterElement = document.createElement("div");
     divFilterElement.classList = "filters";
     sectionPortfolio.appendChild(divFilterElement);
+
     const divFilter = document.querySelector(".filters");
     let numberOfCategories = categories.length;
-    console.log(numberOfCategories);
-    const buttonElement = "<button></button>";
+    const buttonElement = '<button class = "button-filter">test</button>';
     divFilter.innerHTML = buttonElement.repeat(numberOfCategories);
+    const buttonFilter = document.querySelector("button");
   });
