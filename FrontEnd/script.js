@@ -1,3 +1,6 @@
+const divGallery = document.querySelector(".gallery");
+const sectionPortfolio = document.querySelector("#portfolio");
+
 fetch("http://localhost:5678/api/works")
   .then((response) => response.json())
   .then((gallery) => {
@@ -8,9 +11,21 @@ fetch("http://localhost:5678/api/works")
       const figcaptionElement = document.createElement("figcaption");
       figcaptionElement.innerText = gallery[i].title;
 
-      const divGallery = document.querySelector(".gallery");
       divGallery.appendChild(figureElement);
       figureElement.appendChild(imgElement);
       figureElement.appendChild(figcaptionElement);
     }
+  });
+
+fetch("http://localhost:5678/api/categories")
+  .then((response) => response.json())
+  .then((categories) => {
+    const divFilterElement = document.createElement("div");
+    divFilterElement.classList = "filters";
+    sectionPortfolio.appendChild(divFilterElement);
+    const divFilter = document.querySelector(".filters");
+    let numberOfCategories = categories.length;
+    console.log(numberOfCategories);
+    const buttonElement = "<button></button>";
+    divFilter.innerHTML = buttonElement.repeat(numberOfCategories);
   });
