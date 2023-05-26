@@ -5,16 +5,19 @@ const sectionPortfolio = document.querySelector("#portfolio");
 fetch("http://localhost:5678/api/works")
   .then((response) => response.json())
   .then((gallery) => {
-    for (let i in gallery) {
-      const figureElement = document.createElement("figure");
-      const imgElement = document.createElement("img");
-      imgElement.src = gallery[i].imageUrl;
-      const figcaptionElement = document.createElement("figcaption");
-      figcaptionElement.innerText = gallery[i].title;
-      divGallery.appendChild(figureElement);
-      figureElement.appendChild(imgElement);
-      figureElement.appendChild(figcaptionElement);
+    function displayGallery(gallery) {
+      for (let i in gallery) {
+        const figureElement = document.createElement("figure");
+        const imgElement = document.createElement("img");
+        imgElement.src = gallery[i].imageUrl;
+        const figcaptionElement = document.createElement("figcaption");
+        figcaptionElement.innerText = gallery[i].title;
+        divGallery.appendChild(figureElement);
+        figureElement.appendChild(imgElement);
+        figureElement.appendChild(figcaptionElement);
+      }
     }
+    displayGallery(gallery);
     // création des boutons filtres en fonction du nombre de catégories
     fetch("http://localhost:5678/api/categories")
       .then((response) => response.json())
@@ -42,14 +45,16 @@ fetch("http://localhost:5678/api/works")
           const galleryTous = gallery.filter(function (gallery) {
             return gallery;
           });
-          console.log(gallery);
+          divGallery.innerHTML = "";
+          displayGallery(gallery);
         });
         const buttonFilterObjets = document.querySelector(".filter-Objets");
         buttonFilterObjets.addEventListener("click", function () {
           const galleryObjets = gallery.filter(function (gallery) {
             return gallery.categoryId == 1;
           });
-          console.log(galleryObjets);
+          divGallery.innerHTML = "";
+          displayGallery(galleryObjets);
         });
         const buttonFilterAppartements = document.querySelector(
           ".filter-Appartements"
@@ -58,7 +63,8 @@ fetch("http://localhost:5678/api/works")
           const galleryAppartements = gallery.filter(function (gallery) {
             return gallery.categoryId == 2;
           });
-          console.log(galleryAppartements);
+          divGallery.innerHTML = "";
+          displayGallery(galleryAppartements);
         });
         const buttonFilterHotelsEtRestaurants =
           document.querySelector(".filter-Hotels");
@@ -66,7 +72,8 @@ fetch("http://localhost:5678/api/works")
           const galleryHotelsEtRestaurants = gallery.filter(function (gallery) {
             return gallery.categoryId == 3;
           });
-          console.log(galleryHotelsEtRestaurants);
+          divGallery.innerHTML = "";
+          displayGallery(galleryHotelsEtRestaurants);
         });
       });
   });
