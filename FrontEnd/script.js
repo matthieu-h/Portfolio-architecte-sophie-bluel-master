@@ -1,24 +1,10 @@
 const divGallery = document.querySelector(".gallery");
 const sectionPortfolio = document.querySelector("#portfolio");
 
-// import de la gallery
 fetch("http://localhost:5678/api/works")
   .then((response) => response.json())
   .then((gallery) => {
-    function displayGallery(gallery) {
-      for (let i in gallery) {
-        const figureElement = document.createElement("figure");
-        const imgElement = document.createElement("img");
-        imgElement.src = gallery[i].imageUrl;
-        const figcaptionElement = document.createElement("figcaption");
-        figcaptionElement.innerText = gallery[i].title;
-        divGallery.appendChild(figureElement);
-        figureElement.appendChild(imgElement);
-        figureElement.appendChild(figcaptionElement);
-      }
-    }
     displayGallery(gallery);
-    // création des boutons filtres en fonction du nombre de catégories
     fetch("http://localhost:5678/api/categories")
       .then((response) => response.json())
       .then((categories) => {
@@ -77,3 +63,16 @@ fetch("http://localhost:5678/api/works")
         });
       });
   });
+
+function displayGallery(gallery) {
+  for (let i in gallery) {
+    const figureElement = document.createElement("figure");
+    const imgElement = document.createElement("img");
+    imgElement.src = gallery[i].imageUrl;
+    const figcaptionElement = document.createElement("figcaption");
+    figcaptionElement.innerText = gallery[i].title;
+    divGallery.appendChild(figureElement);
+    figureElement.appendChild(imgElement);
+    figureElement.appendChild(figcaptionElement);
+  }
+}
