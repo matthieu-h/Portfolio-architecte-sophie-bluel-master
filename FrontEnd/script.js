@@ -61,8 +61,17 @@ fetch("http://localhost:5678/api/works")
           divGallery.innerHTML = "";
           displayGallery(galleryHotelsEtRestaurants);
         });
+        if (tokenStorage) {
+          displayHomepageEdit();
+          divFilter.classList = " filters-homepage-edit";
+        }
       });
   });
+
+// Récupération du token dans le stockage de la session
+const tokenObject = window.sessionStorage.getItem("token");
+const tokenObjectStorage = JSON.parse(tokenObject);
+const tokenStorage = tokenObjectStorage.token;
 
 function displayGallery(gallery) {
   for (let i in gallery) {
@@ -75,4 +84,35 @@ function displayGallery(gallery) {
     figureElement.appendChild(imgElement);
     figureElement.appendChild(figcaptionElement);
   }
+}
+
+function displayHomepageEdit() {
+  const editionBarElement = document.createElement("div");
+  editionBarElement.classList = "edition-bar";
+  const body = document.querySelector("body");
+  body.appendChild(editionBarElement);
+
+  const iconElement = document.createElement("img");
+  iconElement.src = "./assets/icons/pen-to-square-solid.svg";
+  const divEditionBar = document.querySelector(".edition-bar");
+  divEditionBar.appendChild(iconElement);
+
+  const pElement = document.createElement("p");
+  pElement.innerHTML = "Mode édition";
+  divEditionBar.appendChild(pElement);
+
+  const buttonElement = document.createElement("button");
+  buttonElement.innerHTML = "publier les changements";
+  divEditionBar.appendChild(buttonElement);
+
+  const icon2Element = document.createElement("img");
+  icon2Element.src = "./assets/icons/pen-to-square-solid.svg";
+  const divMesProjets = document.querySelector(".mes-projets");
+  divMesProjets.appendChild(icon2Element);
+
+  const modifierElement = document.createElement("p");
+  modifierElement.innerHTML = "modifier";
+  divMesProjets.appendChild(modifierElement);
+
+  divMesProjets.classList = "mes-projets mes-projets-edit";
 }

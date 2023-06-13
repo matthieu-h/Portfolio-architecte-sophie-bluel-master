@@ -30,7 +30,6 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-	background: #FFFEF8;
 	;
 }
 ol, ul {
@@ -51,14 +50,25 @@ table {
 /** end reset css**/
 body {
 	max-width: 1140px;
+	background: #FFFEF8;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	display: flex;
+	flex-direction: column;
 }
+
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
+	order: 2;
+}
+main{
+	order:3;
+}
+footer{
+	order:4;
 }
 section {
 	margin: 50px 0
@@ -77,7 +87,7 @@ h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
+	;
 }
 
 h2{
@@ -90,7 +100,7 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
+	
 }
 nav li {
 	padding: 0 10px;
@@ -103,7 +113,7 @@ li:hover {
 nav a{
 	text-decoration: none;
 	color: #000000;
-
+	
 }
 #introduction {
 	display: flex;
@@ -134,10 +144,28 @@ nav a{
 	flex-direction: column;
 }
 
-#portfolio h2 {
-	order: 1;
-	text-align: center;
+/* #portfolio h2 {
 	margin-bottom: 1em;
+} */
+.mes-projets{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	order: 1;
+	margin-bottom: 1em;
+}
+.mes-projets h2{
+	margin-bottom: 0px;
+}
+.mes-projets-edit{
+	margin-bottom: 92px;
+}
+.mes-projets img{
+	height: 15.7px;
+	width: 15.7px;
+	margin-left: 31px;
+	margin-right: 11.13px;
 }
 
 /*CSS boutons */
@@ -147,6 +175,10 @@ nav a{
 	justify-content: center;
 	gap: 10px;
 	margin-bottom: 51px;
+	margin-top: 51px;
+}
+.filters-homepage-edit{
+	display: none;
 }
 
 .button-filter{
@@ -171,15 +203,15 @@ nav a{
 
 .gallery img {
 	width: 100%;
-
+	
 }
 #contact, #login {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > *, #login > * {
 	text-align: center;
-
+	
 }
 #contact h2, #login h2{
 	margin-bottom: 20px;
@@ -218,7 +250,7 @@ input[type="submit"]{
 }
 
 #login-page header {
-margin-bottom: 150px;
+	margin-bottom: 150px;
 }
 #login{
 	display: flex;
@@ -253,3 +285,35 @@ footer nav ul {
 	margin: 2em
 }
 
+.edition-bar{
+	background: #000000;
+	width : 100vw;
+	margin-left: calc(-1 * ((100vw - 100%) / 2));
+	height: 59px;
+	order: 1;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	font-size: 16px;
+}
+
+.edition-bar img{
+	height: 15.7px;
+	width: 15.7px;
+	filter: invert(98%) sepia(100%) saturate(0%) hue-rotate(117deg) brightness(104%) contrast(102%);
+}
+.edition-bar p{
+	color: #FFFFFF;
+	margin-left: 12.3px;
+	
+}
+.edition-bar button{
+	background: #FFFFFF;
+	border-radius: 60px;
+	border: none;
+	height: 38px;
+	width: 216px;
+	margin-left: 21px;
+	font-size: 16px;
+}

@@ -18,29 +18,19 @@ loginForm.addEventListener("submit", function logIn(event) {
     headers: { "Content-Type": "application/json" },
     body: loginObject,
   }).then(function (response) {
-    response
-      .json()
-
-      .then((token) => {
-        console.log(response.ok);
-        if (response.ok) {
-          const tokenStorage = JSON.stringify(token);
-          window.sessionStorage.setItem("token", tokenStorage);
-          // location.reload();
-          document.location.assign("./index.html");
-        } else {
-          const pMessageElement = document.createElement("p");
-          pMessageElement.classList = "message";
-          pMessageElement.innerText = "Email et/ou mot de passe incorrects";
-          const loginSection = document.querySelector("#login");
-          loginSection.appendChild(pMessageElement);
-        }
-      });
+    response.json().then((token) => {
+      console.log(response.ok);
+      if (response.ok) {
+        const tokenStorage = JSON.stringify(token);
+        window.sessionStorage.setItem("token", tokenStorage);
+        document.location.assign("./index.html");
+      } else {
+        const pMessageElement = document.createElement("p");
+        pMessageElement.classList = "message";
+        pMessageElement.innerText = "Email et/ou mot de passe incorrects";
+        const loginSection = document.querySelector("#login");
+        loginSection.appendChild(pMessageElement);
+      }
+    });
   });
 });
-
-// Récupération du token dans le stockage de la session
-const tokenObject = window.sessionStorage.getItem("token");
-const tokenObjectStorage = JSON.parse(tokenObject);
-const tokenStorage = tokenObjectStorage.token;
-console.log(tokenStorage);
