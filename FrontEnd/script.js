@@ -63,7 +63,7 @@ fetch("http://localhost:5678/api/works")
         });
         if (tokenStorage) {
           displayHomepageEdit();
-          divFilter.classList = " filters-homepage-edit";
+          divFilter.style.display = "none";
         }
       });
   });
@@ -87,6 +87,7 @@ function displayGallery(gallery) {
 }
 
 function displayHomepageEdit() {
+  //affichage barre d'édition en haut de page
   const editionBarElement = document.createElement("div");
   editionBarElement.classList = "edition-bar";
   const body = document.querySelector("body");
@@ -105,14 +106,63 @@ function displayHomepageEdit() {
   buttonElement.innerHTML = "publier les changements";
   divEditionBar.appendChild(buttonElement);
 
+  //affichage 1er élément modifier
+  const divModifierElement = document.createElement("div");
+  divModifierElement.classList = "modify";
+  const introfigureElement = document.querySelector("figure");
+  introfigureElement.appendChild(divModifierElement);
+
   const icon2Element = document.createElement("img");
   icon2Element.src = "./assets/icons/pen-to-square-solid.svg";
-  const divMesProjets = document.querySelector(".mes-projets");
-  divMesProjets.appendChild(icon2Element);
+  icon2Element.classList = "modify-icon";
+  divModifierElement.appendChild(icon2Element);
 
-  const modifierElement = document.createElement("p");
+  const modifierElement = document.createElement("a");
+  modifierElement.href = "#modal";
   modifierElement.innerHTML = "modifier";
-  divMesProjets.appendChild(modifierElement);
+  modifierElement.classList = "modal-link";
+  divModifierElement.appendChild(modifierElement);
+
+  //affichage 2ème élément modifier
+  const icon3Element = document.createElement("img");
+  icon3Element.src = "./assets/icons/pen-to-square-solid.svg";
+  const divMesProjets = document.querySelector(".mes-projets");
+  divMesProjets.appendChild(icon3Element);
+
+  const modifier2Element = document.createElement("a");
+  modifier2Element.href = "#modal";
+  modifier2Element.innerHTML = "modifier";
+  modifier2Element.classList = "modal-link";
+  divMesProjets.appendChild(modifier2Element);
 
   divMesProjets.classList = "mes-projets mes-projets-edit";
+
+  //affichage fenêtre modale
+  const modifyLinkElement = document.querySelectorAll(".modal-link");
+  const modalElement = document.querySelector(".modal");
+  const arrowLeftElement = document.querySelector(".arrow-left");
+  const modalNavElement = document.querySelector(".modal-nav");
+  const modalWindowElement = document.querySelector(".modal-window");
+
+  const openModalWindow = function () {
+    modalElement.style.display = "flex";
+    arrowLeftElement.style.display = "none";
+    modalNavElement.style.justifyContent = "flex-end";
+  };
+  modifyLinkElement.forEach((a) => {
+    a.addEventListener("click", openModalWindow);
+    return;
+  });
+
+  //fermeture fenêtre modale
+  const closeModalWindow = function () {
+    modalElement.style.display = "none";
+  };
+  const xmarkElement = document.querySelector(".xmark");
+  xmarkElement.addEventListener("click", closeModalWindow);
+  modalElement.addEventListener("click", closeModalWindow);
+  const stopPropagation = function (e) {
+    e.stopPropagation();
+  };
+  modalWindowElement.addEventListener("click", stopPropagation);
 }
