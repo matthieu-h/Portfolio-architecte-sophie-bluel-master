@@ -19,7 +19,6 @@ loginForm.addEventListener("submit", function logIn(event) {
     body: loginObject,
   }).then(function (response) {
     response.json().then((token) => {
-      console.log(response.ok);
       if (response.ok) {
         const tokenStorage = JSON.stringify(token);
         window.sessionStorage.setItem("token", tokenStorage);

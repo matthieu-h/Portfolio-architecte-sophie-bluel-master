@@ -1,5 +1,6 @@
 const divGallery = document.querySelector(".gallery");
 const sectionPortfolio = document.querySelector("#portfolio");
+const modalDivGallery = document.querySelector(".modal-gallery");
 
 fetch("http://localhost:5678/api/works")
   .then((response) => response.json())
@@ -64,6 +65,7 @@ fetch("http://localhost:5678/api/works")
         if (tokenStorage) {
           displayHomepageEdit();
           divFilter.style.display = "none";
+          displaymodalGallery(gallery);
         }
       });
   });
@@ -86,6 +88,53 @@ function displayGallery(gallery) {
   }
 }
 
+function displaymodalGallery(gallery) {
+  for (let i in gallery) {
+    const figureModalElement = document.createElement("figure");
+    const imgModalElement = document.createElement("img");
+    imgModalElement.src = gallery[i].imageUrl;
+    const divTrashCanElement = document.createElement("div");
+    divTrashCanElement.classList = "trash-can";
+    const imgTrashCanElement = document.createElement("img");
+    imgTrashCanElement.src = "./assets/icons/trash-can-solid.svg";
+    imgTrashCanElement.id = gallery[i].id;
+    const pEditElement = document.createElement("p");
+    pEditElement.innerText = "éditer";
+    modalDivGallery.appendChild(figureModalElement);
+    figureModalElement.appendChild(imgModalElement);
+    figureModalElement.appendChild(pEditElement);
+    figureModalElement.appendChild(divTrashCanElement);
+    divTrashCanElement.appendChild(imgTrashCanElement);
+    // Suppression de travaux et mise à jour des galleries modale et principale
+    const deleteWork = function (id) {
+      const idNumber = this.id;
+      console.log(idNumber);
+      fetch(`http://localhost:5678/api/works/${idNumber}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${tokenStorage}`,
+        },
+      }).then((response) => {
+        if (response.ok) {
+          divGallery.innerHTML = "";
+          modalDivGallery.innerHTML = "";
+          fetch("http://localhost:5678/api/works")
+            .then((response) => response.json())
+            .then((gallery) => {
+              displayGallery(gallery);
+              fetch("http://localhost:5678/api/categories")
+                .then((response) => response.json())
+                .then((categories) => {
+                  displaymodalGallery(gallery);
+                });
+            });
+        }
+      });
+    };
+    imgTrashCanElement.addEventListener("click", deleteWork);
+  }
+}
+//
 function displayHomepageEdit() {
   //affichage barre d'édition en haut de page
   const editionBarElement = document.createElement("div");
