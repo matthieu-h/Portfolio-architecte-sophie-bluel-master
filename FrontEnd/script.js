@@ -2,10 +2,12 @@ const divGallery = document.querySelector(".gallery");
 const sectionPortfolio = document.querySelector("#portfolio");
 const modalDivGallery = document.querySelector(".modal-gallery");
 
+//affichage galerie
 fetch("http://localhost:5678/api/works")
   .then((response) => response.json())
   .then((gallery) => {
     displayGallery(gallery);
+    //affichage des catégories
     fetch("http://localhost:5678/api/categories")
       .then((response) => response.json())
       .then((categories) => {
@@ -26,12 +28,24 @@ fetch("http://localhost:5678/api/works")
             "button-filter filter-" + categories[i].name;
           divFilter.appendChild(buttonElement);
         }
+
         // filtres des catégories lors du clic sur les boutons
+        const buttonFilter = document.querySelectorAll(".button-filter");
+        console.log(buttonFilter);
         const buttonFilterTous = document.querySelector(".filter-Tous");
+        buttonFilterTous.classList.add("button-filter-selected");
+        function changeButtonBackground(button) {
+          buttonFilter.forEach((i) =>
+            i.classList.remove("button-filter-selected")
+          );
+          button.classList.add("button-filter-selected");
+        }
+
         buttonFilterTous.addEventListener("click", function () {
           const galleryTous = gallery.filter(function (gallery) {
             return gallery;
           });
+          changeButtonBackground(buttonFilterTous);
           divGallery.innerHTML = "";
           displayGallery(gallery);
         });
@@ -40,6 +54,7 @@ fetch("http://localhost:5678/api/works")
           const galleryObjets = gallery.filter(function (gallery) {
             return gallery.categoryId == 1;
           });
+          changeButtonBackground(buttonFilterObjets);
           divGallery.innerHTML = "";
           displayGallery(galleryObjets);
         });
@@ -50,6 +65,7 @@ fetch("http://localhost:5678/api/works")
           const galleryAppartements = gallery.filter(function (gallery) {
             return gallery.categoryId == 2;
           });
+          changeButtonBackground(buttonFilterAppartements);
           divGallery.innerHTML = "";
           displayGallery(galleryAppartements);
         });
@@ -59,6 +75,7 @@ fetch("http://localhost:5678/api/works")
           const galleryHotelsEtRestaurants = gallery.filter(function (gallery) {
             return gallery.categoryId == 3;
           });
+          changeButtonBackground(buttonFilterHotelsEtRestaurants);
           divGallery.innerHTML = "";
           displayGallery(galleryHotelsEtRestaurants);
         });
@@ -108,7 +125,6 @@ function displaymodalGallery(gallery) {
     // Suppression de travaux et mise à jour des galleries modale et principale
     const deleteWork = function (id) {
       const idNumber = this.id;
-      console.log(idNumber);
       fetch(`http://localhost:5678/api/works/${idNumber}`, {
         method: "DELETE",
         headers: {
@@ -169,7 +185,6 @@ function displayHomepageEdit() {
   const modifierElement = document.createElement("a");
   modifierElement.href = "#modal";
   modifierElement.innerHTML = "modifier";
-  modifierElement.classList = "modal-link";
   divModifierElement.appendChild(modifierElement);
 
   //affichage 2ème élément modifier
@@ -187,7 +202,7 @@ function displayHomepageEdit() {
   divMesProjets.classList = "mes-projets mes-projets-edit";
 
   //affichage fenêtre modale
-  const modifyLinkElement = document.querySelectorAll(".modal-link");
+  const modifyLinkElement = document.querySelector(".modal-link");
   const modalElement = document.querySelector(".modal");
   const arrowLeftElement = document.querySelector(".arrow-left");
   const modalNavElement = document.querySelector(".modal-nav");
@@ -198,10 +213,7 @@ function displayHomepageEdit() {
     arrowLeftElement.style.display = "none";
     modalNavElement.style.justifyContent = "flex-end";
   };
-  modifyLinkElement.forEach((a) => {
-    a.addEventListener("click", openModalWindow);
-    return;
-  });
+  modifyLinkElement.addEventListener("click", openModalWindow);
 
   //fermeture fenêtre modale
   const closeModalWindow = function () {
@@ -214,4 +226,91 @@ function displayHomepageEdit() {
     e.stopPropagation();
   };
   modalWindowElement.addEventListener("click", stopPropagation);
+
+  // ouverture 2ème page modale
+  const addPictureButtonElement = document.querySelector(".add-picture-button");
+  const modalSecondPageElement = document.querySelector(".modal-second-page");
+  const openSecondPageModal = function () {
+    modalSecondPageElement.style.display = "flex";
+    modalWindowElement.style.display = "none";
+  };
+  addPictureButtonElement.addEventListener("click", openSecondPageModal);
+
+  // retour vers la première page
+  const returnToModalWindow = function () {
+    modalSecondPageElement.style.display = "none";
+    modalWindowElement.style.display = "flex";
+  };
+  const arrowLeftFormElement = document.querySelector(".arrow-left-form");
+  arrowLeftFormElement.addEventListener("click", returnToModalWindow);
+
+  // fermeture 2ème page modale
+  modalSecondPageElement.addEventListener("click", stopPropagation);
+  const xmarkFormElement = document.querySelector(".xmark-form");
+  const closeSecondPageModal = function () {
+    modalSecondPageElement.style.display = "none";
+    modalElement.style.display = "none";
+    modalWindowElement.style.display = "flex";
+  };
+  xmarkFormElement.addEventListener("click", closeSecondPageModal);
+}
+
+//insertion des catégories dans le formulaire
+fetch("http://localhost:5678/api/categories")
+  .then((response) => response.json())
+  .then((categories) => {
+    const categorieSelectElement = document.querySelector(".categorie-select");
+    for (let i in categories) {
+      const optionElement = document.createElement("option");
+      optionElement.innerText = categories[i].name;
+      optionElement.setAttribute("value", categories[i].id);
+      categorieSelectElement.appendChild(optionElement);
+    }
+  });
+
+// récupération des éléments du formulaire
+const modalForm = document.querySelector("#modal-form");
+modalForm.addEventListener("submit", addWork);
+function addWork(e) {
+  e.preventDefault();
+  const formData = new FormData();
+  const fileInputElement = document.querySelector(".file-input");
+  const imageFile = fileInputElement.files[0];
+  const titleInputValue = document.querySelector(".title-input").value;
+
+  const categoryIdValue = document.querySelector(".categorie-select").value;
+
+  console.log(categoryIdValue);
+
+  // const workData = { image, title, categoryId };
+  // console.log(workData);
+  console.log(titleInputValue);
+  console.log(imageFile);
+  formData.append("image", imageFile);
+  formData.append("title", titleInputValue);
+  formData.append("category", categoryIdValue);
+  console.log(...formData);
+
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${tokenStorage}`,
+    },
+  }).then((response) => {
+    if (response.ok) {
+      divGallery.innerHTML = "";
+      modalDivGallery.innerHTML = "";
+      fetch("http://localhost:5678/api/works")
+        .then((response) => response.json())
+        .then((gallery) => {
+          displayGallery(gallery);
+          fetch("http://localhost:5678/api/categories")
+            .then((response) => response.json())
+            .then((categories) => {
+              displaymodalGallery(gallery);
+            });
+        });
+    }
+  });
 }

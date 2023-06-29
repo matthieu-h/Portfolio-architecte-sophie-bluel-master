@@ -189,6 +189,11 @@ nav a{
 	color:#1D6154;
 }
 
+.button-filter-selected{
+	background: #1D6154;
+	color:#FFFFFF;
+}
+
 .gallery {
 	order: 3;
 	width: 100%;
@@ -345,7 +350,7 @@ a{
 	background: rgba(0, 0, 0, 0.3);
 }
 
-.modal-window{
+.modal-window, .modal-second-page{
 	width: 630px;
 	height: 731px;
 	border-radius: 10px;
@@ -354,14 +359,13 @@ a{
 	flex-direction: column;
 	align-items: center;
 }
-.modal-window h2{
+.modal-window h2, .modal-second-page h2{
 	color:#000000;
 	font-family: Work Sans;
 	font-size: 26px;
 	font-weight: 400;
 	text-align: center;
 	margin-bottom: 52px;
-	
 }
 
 .modal-nav{
@@ -437,4 +441,104 @@ a{
 	width: 9px;
 	height: 9px;
 	filter: invert(97%) sepia(7%) saturate(91%) hue-rotate(60deg) brightness(120%) contrast(100%);
+}
+
+
+.modal-second-page{
+	display: none;
+	height: 670px;
+}
+.modal-second-page h2{
+	margin-bottom: 36px;
+}
+.modal-second-page .modal-nav{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.modal-second-page .line{
+	position: relative;
+	bottom: 100px;
+}
+
+.modal-second-page input[type="submit"]{
+	background:#A7A7A7;
+	border: none;
+}
+
+#modal-form{
+	display: flex;
+	flex-direction: column;
+}
+
+.modal-form-add-photo{
+	width: 420px;
+	height: 169px;
+	border-radius: 3px;
+	background: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.file-input{
+	position: relative;
+	z-index: 2;
+	opacity:0;
+}
+.image{
+	margin-top: 22px;
+	margin-bottom: 15px;
+}
+.add-picture-form-button{
+	position: absolute;
+	width: 173px;
+	height: 36px;
+	border-radius: 50px;
+	background: #CBD6DC;
+	border: none;
+	color:#306685;
+	font-size: 14px;
+	font-family: Work Sans;
+	font-weight: 500;
+	margin: none;
+}
+.required-format{
+	color: #444;
+	text-align: center;
+	font-size: 10px;
+	font-family: Work Sans;
+	margin-top: 17px;
+}
+.work-title, .work-categorie{
+	color: #3D3D3D;
+	font-size: 14px;
+	font-family: Work Sans;
+	font-weight: 500;
+}
+.work-title{
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+.work-categorie{
+	margin-top: 21px;
+	margin-bottom: 10px;
+}
+.title-input, #modal-form select, .categorie-selected option{
+	width: 420px;
+	height: 51px;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border: none;
+}
+#modal-form select{
+	margin-bottom: 59px;
+	color: #6C6C6C;
+}
+.input-file{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 7px;
+}
+.file-input{
+	width: 173px;
 }

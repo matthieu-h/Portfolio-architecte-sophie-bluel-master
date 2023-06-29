@@ -65,8 +65,34 @@
 			</div>
 			<div class="line">
 			</div>
-			<button class="add-picture-button"><a href="">Ajouter une photo</a></button>
+			<button class="add-picture-button">Ajouter une photo</button>
 			<p class="delete-gallery">Supprimer la gallerie</p>
+		</div>
+		<div class="modal-second-page">
+			<div class="modal-nav">
+				<img src="./assets/icons/arrow-left-solid.svg" class="arrow-left arrow-left-form">
+				<img src="./assets/icons/xmark-solid.svg" class="xmark xmark-form">
+			</div>
+			<h2>Ajout photo</h2>			
+				<form id="modal-form" method="post" action="http://localhost:5678/api/works">
+				<div class="modal-form-add-photo">
+					<img src="./assets/icons/picture-svgrepo-com 1.svg" class="image">
+					<div class="input-file">
+						<button class="add-picture-form-button"> + Ajouter photo</button>
+						<input type="file" name="file" class="file-input">
+					</div>
+					<p class="required-format">jpg, png : 4mo max</p>
+				</div>
+				<label for="title" class="work-title">Titre</label>
+				<input type="text" name="title" class="title-input">
+				<label for="category" class="work-categorie">Catégorie</label>
+				<select name="category" class="categorie-select">
+					<option value="" selected></option>
+				</select>
+				<input type="submit" class="add-picture-button" value="Valider">
+				</form>	
+			<div class="line">
+			</div>
 		</div>
 	</aside>
 </main>
