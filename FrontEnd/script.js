@@ -31,7 +31,6 @@ fetch("http://localhost:5678/api/works")
 
         // filtres des catégories lors du clic sur les boutons
         const buttonFilter = document.querySelectorAll(".button-filter");
-        console.log(buttonFilter);
         const buttonFilterTous = document.querySelector(".filter-Tous");
         buttonFilterTous.classList.add("button-filter-selected");
         function changeButtonBackground(button) {
@@ -255,42 +254,80 @@ function displayHomepageEdit() {
   xmarkFormElement.addEventListener("click", closeSecondPageModal);
 }
 
-//insertion des catégories dans le formulaire
-fetch("http://localhost:5678/api/categories")
-  .then((response) => response.json())
-  .then((categories) => {
-    const categorieSelectElement = document.querySelector(".categorie-select");
-    for (let i in categories) {
-      const optionElement = document.createElement("option");
-      optionElement.innerText = categories[i].name;
-      optionElement.setAttribute("value", categories[i].id);
-      categorieSelectElement.appendChild(optionElement);
-    }
-  });
+//affichage des catégories dans le formulaire
+function displayCategoriesInForm() {
+  fetch("http://localhost:5678/api/categories")
+    .then((response) => response.json())
+    .then((categories) => {
+      const categorieSelectElement =
+        document.querySelector(".categorie-select");
+      for (let i in categories) {
+        const optionElement = document.createElement("option");
+        optionElement.innerText = categories[i].name;
+        optionElement.setAttribute("value", categories[i].id);
+        categorieSelectElement.appendChild(optionElement);
+      }
+    });
+}
+displayCategoriesInForm();
+
+// affichage image sélectionnée
+const modalFormAddPhotoElement = document.querySelector(
+  ".modal-form-add-photo"
+);
+const modalFormAPhotoPreviewElement = document.querySelector(
+  ".modal-form-photo-preview"
+);
+const fileInput = document.querySelector(".file-input");
+fileInput.addEventListener("change", function (event) {
+  modalFormAddPhotoElement.style.display = "none";
+  modalFormAPhotoPreviewElement.style.display = "flex";
+  const previewImageElement = document.createElement("img");
+  previewImageElement.className = "preview-image";
+  modalFormAPhotoPreviewElement.appendChild(previewImageElement);
+  const imageFile = fileInput.files[0];
+  const selectedFile = event.target.files[0];
+  previewImageElement.src = "./assets/images/" + selectedFile.name;
+});
+
+//vérification du remplissage de tous les champs et changement de couleur du bouton valider
+const titleInput = document.querySelector(".title-input");
+const categoryId = document.querySelector(".categorie-select");
+
+function checkFields() {
+  const addPictureButtonElement = document.querySelector(
+    ".valid-add-picture-button"
+  );
+  const titleInputValue = titleInput.value;
+  const categoryIdValue = categoryId.value;
+  const imageFile = fileInput.files[0];
+  if (
+    imageFile !== undefined &&
+    titleInputValue !== "" &&
+    categoryIdValue !== ""
+  ) {
+    addPictureButtonElement.style.backgroundColor = "#1D6154";
+  }
+}
+
+titleInput.addEventListener("input", checkFields);
+categoryId.addEventListener("change", checkFields);
+fileInput.addEventListener("change", checkFields);
 
 // récupération des éléments du formulaire
 const modalForm = document.querySelector("#modal-form");
 modalForm.addEventListener("submit", addWork);
 function addWork(e) {
   e.preventDefault();
-  const formData = new FormData();
-  const fileInputElement = document.querySelector(".file-input");
-  const imageFile = fileInputElement.files[0];
   const titleInputValue = document.querySelector(".title-input").value;
-
   const categoryIdValue = document.querySelector(".categorie-select").value;
-
-  console.log(categoryIdValue);
-
-  // const workData = { image, title, categoryId };
-  // console.log(workData);
-  console.log(titleInputValue);
-  console.log(imageFile);
+  const formData = new FormData();
+  const imageFile = fileInput.files[0];
   formData.append("image", imageFile);
   formData.append("title", titleInputValue);
   formData.append("category", categoryIdValue);
-  console.log(...formData);
 
+  // envoi des éléments sur le serveur
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     body: formData,
@@ -299,6 +336,7 @@ function addWork(e) {
     },
   }).then((response) => {
     if (response.ok) {
+      // mise à jour des galleries
       divGallery.innerHTML = "";
       modalDivGallery.innerHTML = "";
       fetch("http://localhost:5678/api/works")
@@ -311,6 +349,15 @@ function addWork(e) {
               displaymodalGallery(gallery);
             });
         });
+      // réinitialisation des champs du formulaire
+      modalFormAPhotoPreviewElement.innerHTML = "";
+      modalFormAPhotoPreviewElement.style.display = "none";
+      modalFormAddPhotoElement.style.display = "flex";
+      const categorySelectedElement =
+        document.querySelector(".categorie-select");
+      categorySelectedElement.value = "";
+      const titleInputElement = document.querySelector(".title-input");
+      titleInputElement.value = "";
     }
   });
 }

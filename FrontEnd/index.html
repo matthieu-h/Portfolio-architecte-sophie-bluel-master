@@ -79,17 +79,20 @@
 					<img src="./assets/icons/picture-svgrepo-com 1.svg" class="image">
 					<div class="input-file">
 						<button class="add-picture-form-button"> + Ajouter photo</button>
-						<input type="file" name="file" class="file-input">
+						<input type="file" name="file" class="file-input" required>
 					</div>
 					<p class="required-format">jpg, png : 4mo max</p>
 				</div>
+				<div class="modal-form-photo-preview">
+
+				</div>
 				<label for="title" class="work-title">Titre</label>
-				<input type="text" name="title" class="title-input">
+				<input type="text" name="title" class="title-input" required>
 				<label for="category" class="work-categorie">Catégorie</label>
-				<select name="category" class="categorie-select">
+				<select name="category" class="categorie-select" required>
 					<option value="" selected></option>
 				</select>
-				<input type="submit" class="add-picture-button" value="Valider">
+				<input type="submit" class="valid-add-picture-button" value="Valider">
 				</form>	
 			<div class="line">
 			</div>
