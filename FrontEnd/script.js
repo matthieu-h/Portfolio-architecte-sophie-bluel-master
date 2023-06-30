@@ -293,11 +293,10 @@ fileInput.addEventListener("change", function (event) {
 //vérification du remplissage de tous les champs et changement de couleur du bouton valider
 const titleInput = document.querySelector(".title-input");
 const categoryId = document.querySelector(".categorie-select");
-
+const addPictureButtonElement = document.querySelector(
+  ".valid-add-picture-button"
+);
 function checkFields() {
-  const addPictureButtonElement = document.querySelector(
-    ".valid-add-picture-button"
-  );
   const titleInputValue = titleInput.value;
   const categoryIdValue = categoryId.value;
   const imageFile = fileInput.files[0];
@@ -358,6 +357,7 @@ function addWork(e) {
       categorySelectedElement.value = "";
       const titleInputElement = document.querySelector(".title-input");
       titleInputElement.value = "";
+      addPictureButtonElement.style.backgroundColor = "#A7A7A7";
     }
   });
 }
