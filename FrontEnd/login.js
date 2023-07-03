@@ -1,6 +1,3 @@
-// email: sophie.bluel@test.tld
-// password: S0phie
-
 // Récupération mail et mot de passe du formulaire Log in
 const loginForm = document.querySelector(".login-form");
 loginForm.addEventListener("submit", function logIn(event) {
@@ -24,8 +21,7 @@ loginForm.addEventListener("submit", function logIn(event) {
         window.sessionStorage.setItem("token", tokenStorage);
         document.location.assign("./index.html");
       } else {
-        const pMessageElement = document.createElement("p");
-        pMessageElement.classList = "message";
+        const pMessageElement = document.querySelector(".message");
         pMessageElement.innerText = "Email et/ou mot de passe incorrects";
         const loginSection = document.querySelector("#login");
         loginSection.appendChild(pMessageElement);

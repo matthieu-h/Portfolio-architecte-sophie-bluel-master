@@ -516,7 +516,7 @@ a{
 	font-family: Work Sans;
 	margin-top: 17px;
 }
-.work-title, .work-categorie{
+.work-title, .work-category{
 	color: #3D3D3D;
 	font-size: 14px;
 	font-family: Work Sans;
@@ -526,11 +526,11 @@ a{
 	margin-top: 30px;
 	margin-bottom: 10px;
 }
-.work-categorie{
+.work-category{
 	margin-top: 21px;
 	margin-bottom: 10px;
 }
-.title-input, #modal-form select, .categorie-selected option{
+.title-input, #modal-form select, .category-selected option{
 	width: 420px;
 	height: 51px;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
@@ -553,4 +553,9 @@ a{
 .preview-image{
 	width: 129px;
 	height: 169px;
+}
+.confirm-message{
+	color:red;
+	display: flex;
+	justify-content: center;
 }

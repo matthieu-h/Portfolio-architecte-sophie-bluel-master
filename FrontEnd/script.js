@@ -259,13 +259,12 @@ function displayCategoriesInForm() {
   fetch("http://localhost:5678/api/categories")
     .then((response) => response.json())
     .then((categories) => {
-      const categorieSelectElement =
-        document.querySelector(".categorie-select");
+      const categorySelectElement = document.querySelector(".category-select");
       for (let i in categories) {
         const optionElement = document.createElement("option");
         optionElement.innerText = categories[i].name;
         optionElement.setAttribute("value", categories[i].id);
-        categorieSelectElement.appendChild(optionElement);
+        categorySelectElement.appendChild(optionElement);
       }
     });
 }
@@ -292,7 +291,7 @@ fileInput.addEventListener("change", function (event) {
 
 //vérification du remplissage de tous les champs et changement de couleur du bouton valider
 const titleInput = document.querySelector(".title-input");
-const categoryId = document.querySelector(".categorie-select");
+const categoryId = document.querySelector(".category-select");
 const addPictureButtonElement = document.querySelector(
   ".valid-add-picture-button"
 );
@@ -319,7 +318,7 @@ modalForm.addEventListener("submit", addWork);
 function addWork(e) {
   e.preventDefault();
   const titleInputValue = document.querySelector(".title-input").value;
-  const categoryIdValue = document.querySelector(".categorie-select").value;
+  const categoryIdValue = document.querySelector(".category-select").value;
   const formData = new FormData();
   const imageFile = fileInput.files[0];
   formData.append("image", imageFile);
@@ -338,6 +337,15 @@ function addWork(e) {
       // mise à jour des galleries
       divGallery.innerHTML = "";
       modalDivGallery.innerHTML = "";
+      // affichage message de confirmation d'ajout de travaux
+      const confirmMessage = document.querySelector(".confirm-message");
+      confirmMessage.innerText =
+        "Le projet a été ajouté à la gallerie avec succès !";
+      function hideConfirmMessage() {
+        confirmMessage.innerHTML = "";
+      }
+      setTimeout(hideConfirmMessage, 4000);
+
       fetch("http://localhost:5678/api/works")
         .then((response) => response.json())
         .then((gallery) => {
@@ -353,7 +361,7 @@ function addWork(e) {
       modalFormAPhotoPreviewElement.style.display = "none";
       modalFormAddPhotoElement.style.display = "flex";
       const categorySelectedElement =
-        document.querySelector(".categorie-select");
+        document.querySelector(".category-select");
       categorySelectedElement.value = "";
       const titleInputElement = document.querySelector(".title-input");
       titleInputElement.value = "";
