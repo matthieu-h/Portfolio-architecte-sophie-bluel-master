@@ -78,11 +78,18 @@ fetch("http://localhost:5678/api/works")
           divGallery.innerHTML = "";
           displayGallery(galleryHotelsEtRestaurants);
         });
-        if (tokenStorage) {
+        //affichage de la page modale
+        if (tokenObject) {
           displayHomepageEdit();
           divFilter.style.display = "none";
           displaymodalGallery(gallery);
         }
+        const logElement = document.querySelector(".log");
+        logElement.addEventListener("click", function logOut() {
+          window.sessionStorage.removeItem("token");
+          console.log(tokenStorage);
+          window.location.href = "./index.html";
+        });
       });
   });
 
@@ -169,6 +176,10 @@ function displayHomepageEdit() {
   const buttonElement = document.createElement("button");
   buttonElement.innerHTML = "publier les changements";
   divEditionBar.appendChild(buttonElement);
+
+  //affichage logout
+  const logElement = document.querySelector(".log");
+  logElement.innerHTML = "logout";
 
   //affichage 1er élément modifier
   const divModifierElement = document.createElement("div");
